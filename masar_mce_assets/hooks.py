@@ -84,6 +84,7 @@ app_license = "mit"
 
 # before_install = "masar_mce_assets.install.before_install"
 # after_install = "masar_mce_assets.install.after_install"
+after_migrate = "masar_mce_assets.install.after_migrate"
 
 # Uninstallation
 # ------------
@@ -137,13 +138,33 @@ app_license = "mit"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"Location": {
+		"validate": "masar_mce_assets.custom.location.location.validate",
+	},
+	"Asset": {
+		"before_insert": "masar_mce_assets.custom.asset.asset.before_insert",
+		"validate": "masar_mce_assets.custom.asset.asset.validate",
+	},
+	"Asset Movement": {
+		"before_submit": "masar_mce_assets.custom.asset_movement.asset_movement.before_submit",
+		"before_cancel": "masar_mce_assets.custom.asset_movement.asset_movement.before_cancel",
+		"on_cancel": "masar_mce_assets.custom.asset_movement.asset_movement.on_cancel",
+	},
+	"Purchase Receipt": {
+		"before_submit": "masar_mce_assets.custom.purchase_receipt.purchase_receipt.before_submit",
+	},
+	"Purchase Invoice": {
+		"before_submit": "masar_mce_assets.custom.purchase_invoice.purchase_invoice.before_submit",
+	},
+}
+
+# Fixtures
+# --------
+
+fixtures = [
+	{"dt": "Custom Field", "filters": [["module", "=", "Masar MCE Assets"]]},
+]
 
 # Scheduled Tasks
 # ---------------

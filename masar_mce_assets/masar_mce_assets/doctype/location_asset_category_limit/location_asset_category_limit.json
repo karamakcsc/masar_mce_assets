@@ -1,0 +1,49 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-10-05 12:51:39.647053",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "asset_category",
+  "column_break_blhw",
+  "maximum_quantity"
+ ],
+ "fields": [
+  {
+   "fieldname": "asset_category",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Asset Category",
+   "options": "Asset Category",
+   "reqd": 1
+  },
+  {
+   "description": "Maximum number of asset units of this category allowed in the location. 0 means no assets of this category are allowed.",
+   "fieldname": "maximum_quantity",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Maximum Quantity",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_blhw",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-10-05 13:06:14.831165",
+ "modified_by": "Administrator",
+ "module": "Masar MCE Assets",
+ "name": "Location Asset Category Limit",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
