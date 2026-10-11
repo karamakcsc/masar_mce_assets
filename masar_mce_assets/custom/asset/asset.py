@@ -9,7 +9,7 @@ from masar_mce_assets.custom.asset_movement.it_asset import (
 	mark_asset_receipt_movement,
 	unmark_asset_receipt_movement,
 )
-
+#
 
 def before_submit(self, method):
 	# Asset.on_submit creates a Receipt Asset Movement; the IT movement rules do not apply to it.
