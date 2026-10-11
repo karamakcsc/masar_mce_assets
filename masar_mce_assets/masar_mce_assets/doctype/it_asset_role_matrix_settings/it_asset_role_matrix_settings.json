@@ -1,0 +1,63 @@
+{
+ "actions": [],
+ "creation": "2026-10-11 10:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "it_asset_section",
+  "it_asset_roles",
+  "ignore_section",
+  "ignore_roles"
+ ],
+ "fields": [
+  {
+   "description": "Users with any of these roles must follow the IT asset workflow on Purchase Receipt, Stock Entry and Asset Movement, unless they also have an ignore role.",
+   "fieldname": "it_asset_section",
+   "fieldtype": "Section Break",
+   "label": "IT Asset Roles"
+  },
+  {
+   "fieldname": "it_asset_roles",
+   "fieldtype": "Table",
+   "label": "IT Asset Roles",
+   "options": "Has Role"
+  },
+  {
+   "description": "Users with any of these roles are exempt from the IT asset restrictions, even if they also have an IT asset role. This only affects the IT asset rules; standard permissions still apply.",
+   "fieldname": "ignore_section",
+   "fieldtype": "Section Break",
+   "label": "Ignore IT Asset Role Matrix"
+  },
+  {
+   "fieldname": "ignore_roles",
+   "fieldtype": "Table",
+   "label": "Ignore IT Asset Role Matrix Roles",
+   "options": "Has Role"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-10-11 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Masar MCE Assets",
+ "name": "IT Asset Role Matrix Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

@@ -43,7 +43,11 @@ app_license = "mit"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
+doctype_js = {
+	"Purchase Receipt": ["public/js/it_asset_role_matrix.js", "public/js/purchase_receipt.js"],
+	"Stock Entry": ["public/js/it_asset_role_matrix.js", "public/js/stock_entry.js"],
+	"Asset Movement": ["public/js/it_asset_role_matrix.js", "public/js/asset_movement.js"],
+}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -83,7 +87,7 @@ app_license = "mit"
 # ------------
 
 # before_install = "masar_mce_assets.install.before_install"
-# after_install = "masar_mce_assets.install.after_install"
+after_install = "masar_mce_assets.install.after_install"
 after_migrate = "masar_mce_assets.install.after_migrate"
 
 # Uninstallation
@@ -145,14 +149,23 @@ doc_events = {
 	"Asset": {
 		"before_insert": "masar_mce_assets.custom.asset.asset.before_insert",
 		"validate": "masar_mce_assets.custom.asset.asset.validate",
+		"before_submit": "masar_mce_assets.custom.asset.asset.before_submit",
+		"on_submit": "masar_mce_assets.custom.asset.asset.on_submit",
 	},
 	"Asset Movement": {
+		"before_validate": "masar_mce_assets.custom.asset_movement.asset_movement.before_validate",
 		"before_submit": "masar_mce_assets.custom.asset_movement.asset_movement.before_submit",
 		"before_cancel": "masar_mce_assets.custom.asset_movement.asset_movement.before_cancel",
 		"on_cancel": "masar_mce_assets.custom.asset_movement.asset_movement.on_cancel",
 	},
 	"Purchase Receipt": {
+		"before_insert": "masar_mce_assets.custom.purchase_receipt.purchase_receipt.before_insert",
 		"before_submit": "masar_mce_assets.custom.purchase_receipt.purchase_receipt.before_submit",
+		"on_submit": "masar_mce_assets.custom.purchase_receipt.purchase_receipt.on_submit",
+	},
+	"Stock Entry": {
+		"before_insert": "masar_mce_assets.custom.stock_entry.stock_entry.before_insert",
+		"before_validate": "masar_mce_assets.custom.stock_entry.stock_entry.before_validate",
 	},
 	"Purchase Invoice": {
 		"before_submit": "masar_mce_assets.custom.purchase_invoice.purchase_invoice.before_submit",
@@ -163,6 +176,8 @@ doc_events = {
 # --------
 
 fixtures = [
+	# masar_mce's fixtures also export every Purchase Receipt custom field, including the ones
+	# in this module; keep both exports in sync.
 	{"dt": "Custom Field", "filters": [["module", "=", "Masar MCE Assets"]]},
 ]
 

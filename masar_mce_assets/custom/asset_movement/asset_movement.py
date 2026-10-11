@@ -7,6 +7,12 @@ from masar_mce_assets.asset_location_limit import (
 	is_asset_counted,
 	validate_incoming_asset_quantities,
 )
+from masar_mce_assets.custom.asset_movement.it_asset import apply_it_asset_movement_rules
+
+
+def before_validate(self, method):
+	# Before ERPNext's validate, which requires the target location the IT rules fill in.
+	apply_it_asset_movement_rules(self)
 
 
 def before_submit(self, method):

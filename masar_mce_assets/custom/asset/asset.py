@@ -5,6 +5,20 @@ from masar_mce_assets.asset_location_limit import (
 	is_asset_counted,
 	validate_asset_location_limit,
 )
+from masar_mce_assets.custom.asset_movement.it_asset import (
+	mark_asset_receipt_movement,
+	unmark_asset_receipt_movement,
+)
+
+
+def before_submit(self, method):
+	# Asset.on_submit creates a Receipt Asset Movement; the IT movement rules do not apply to it.
+	mark_asset_receipt_movement(self.name)
+
+
+def on_submit(self, method):
+	# Hooks run after the controller's on_submit, so the movement is already created.
+	unmark_asset_receipt_movement(self.name)
 
 
 def before_insert(self, method):
