@@ -79,17 +79,38 @@ def get_draft_assets(purchase_receipt, exclude):
 
 def submit_asset(asset_name):
 	"""Configure depreciation from the Asset Category and submit. Returns False if already submitted."""
-	# Row lock: a concurrent run waits here, then sees the Asset submitted and skips it.
 	if frappe.db.get_value("Asset", asset_name, "docstatus", for_update=True) != 0:
 		return False
 
 	asset = frappe.get_doc("Asset", asset_name)
-	finance_book = get_category_finance_book(asset)
+	if asset.purchase_receipt_item:
+		item = frappe.db.get_value(
+			"Purchase Receipt Item",
+			asset.purchase_receipt_item,
+			["name", "location", "custom_serial_number"],
+			as_dict=True,
+		)
+	else:
+		item = None
 
+	if not item:
+		frappe.throw(
+			_("Asset {0} has no valid Purchase Receipt Item.").format(asset.name)
+		)
+	if (
+		asset.meta.has_field("location")
+		and item.get("location")
+	):
+		asset.location = item.location
+	if (
+		asset.meta.has_field("custom_serial_number")
+		and frappe.get_meta("Purchase Receipt Item").has_field("custom_serial_number")
+		and item.get("custom_serial_number")
+	):
+		asset.custom_serial_no = item.custom_serial_numbers_it
+	finance_book = get_category_finance_book(asset)
 	asset.available_for_use_date = asset.purchase_date
 	asset.calculate_depreciation = 1
-
-	# Update the category's book instead of appending, so a retry cannot add a second row.
 	row = next((d for d in asset.finance_books if d.finance_book == finance_book.finance_book), None)
 	if not row:
 		row = asset.append("finance_books", {})
