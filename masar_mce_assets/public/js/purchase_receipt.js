@@ -18,6 +18,7 @@ masar_mce_assets.it_matrix.apply_purchase_receipt = async function (frm) {
 	// masar_mce hides every custom field in the normal cycle, which IT users get by default.
 	if (frm.fields_dict.custom_auto_submit_assets) {
 		frm.set_df_property("custom_auto_submit_assets", "hidden", 0);
+		frm.set_value( "custom_auto_submit_assets",1 );
 	}
 	if (status.member) {
 		masar_mce_assets.it_matrix.PURCHASE_RECEIPT_FIELDS.forEach((fieldname) => {
