@@ -87,7 +87,7 @@ def submit_asset(asset_name):
 		item = frappe.db.get_value(
 			"Purchase Receipt Item",
 			asset.purchase_receipt_item,
-			["name", "location", "custom_serial_number"],
+			["name", "asset_location", "custom_serial_numbers_it"],
 			as_dict=True,
 		)
 	else:
@@ -101,7 +101,7 @@ def submit_asset(asset_name):
 		asset.meta.has_field("location")
 		and item.get("location")
 	):
-		asset.location = item.location
+		asset.location = item.asset_location
 	if (
 		asset.meta.has_field("custom_serial_number")
 		and frappe.get_meta("Purchase Receipt Item").has_field("custom_serial_number")

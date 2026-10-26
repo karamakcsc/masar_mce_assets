@@ -30,6 +30,7 @@ AUTO_SUBMIT_ASSETS_FIELD = "custom_auto_submit_assets"
 
 def before_insert(doc):
 	apply_it_naming_series(doc)
+	check_warehouses(doc)
 	# A default, not a rule: only applied when the creator did not send a value.
 	if doc.get(NORMAL_CYCLE_FIELD) is None and is_it_asset_role_matrix_applicable():
 		doc.set(NORMAL_CYCLE_FIELD, 1)
@@ -164,3 +165,9 @@ def enqueue_auto_submit_assets(doc):
 	frappe.msgprint(
 		_("The Assets of this receipt will be submitted in the background."), alert=True, indicator="blue"
 	)
+
+
+def check_warehouses(doc):
+    for r in doc.get("items"):
+        if r.rejected_qty == 0 and (r.warehouse == r.rejected_warehouse):
+            r.rejected_warehouse = None

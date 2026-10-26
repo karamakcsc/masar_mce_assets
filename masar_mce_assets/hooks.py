@@ -160,6 +160,7 @@ doc_events = {
 	},
 	"Purchase Receipt": {
 		"before_insert": "masar_mce_assets.custom.purchase_receipt.purchase_receipt.before_insert",
+  		"before_validate": "masar_mce_assets.custom.purchase_receipt.purchase_receipt.before_validate",
 		"before_submit": "masar_mce_assets.custom.purchase_receipt.purchase_receipt.before_submit",
 		"on_submit": "masar_mce_assets.custom.purchase_receipt.purchase_receipt.on_submit",
 	},
