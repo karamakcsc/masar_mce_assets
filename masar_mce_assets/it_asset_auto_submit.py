@@ -109,7 +109,10 @@ def submit_asset(asset_name):
 	):
 		asset.custom_serial_no = item.custom_serial_numbers_it
 	finance_book = get_category_finance_book(asset)
-	asset.available_for_use_date = asset.purchase_date
+	posting_date = frappe.utils.getdate(
+		frappe.db.get_value("Purchase Receipt", asset.purchase_receipt, "posting_date")
+	)
+	asset.available_for_use_date = posting_date
 	asset.calculate_depreciation = 1
 	row = next((d for d in asset.finance_books if d.finance_book == finance_book.finance_book), None)
 	if not row:
@@ -120,7 +123,7 @@ def submit_asset(asset_name):
 			"depreciation_method": finance_book.depreciation_method,
 			"total_number_of_depreciations": finance_book.total_number_of_depreciations,
 			"frequency_of_depreciation": finance_book.frequency_of_depreciation,
-			"depreciation_start_date": asset.purchase_date,
+			"depreciation_start_date": posting_date,
 		}
 	)
 
